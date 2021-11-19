@@ -1,0 +1,23 @@
+{
+  "name": "se-second-year-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isabz/se-second-year-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/isabz/se-second-year-project/issues"
+  },
+  "homepage": "https://github.com/isabz/se-second-year-project#readme",
+  "dependencies": {
+    "mongodb": "^4.1.4"
+  }
+}
