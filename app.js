@@ -3,6 +3,8 @@ var mysql = require('mysql');
 const fs = require('fs');
 const app = express()
 
+//############################################
+//create connection and connect:
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -14,65 +16,175 @@ con.connect(function(err) {
 if (err) throw err;
 console.log("Connected to KPI database!");
 });
+//#############################################
+
 
 //begin queries
 
-//example query:
-// app.get('/', (req, res) => {
-
-//   //writing to file with a query
-//   fs.writeFileSync('data.json', '')
-//   var toSend = [];
-//   con.query("SELECT * FROM animal LIMIT 3", function (err, result, fields) {
-//     if (err) throw err;
-//     console.log(result);
-//     toSend = JSON.stringify(result)
-//     fs.appendFileSync('data.json', toSend + "\n");
-//     });
-
-//   //reading from file
-//   fs.readFile('data.json', 'utf8' , (err, data) => {
-//     if (err) {
-//       console.error(err)
-//       return
-//     }
-//     output = data.split("\n");
-//     //output contains each JSON block in an array, the last one is empty
-//     res.send('Hello World! ' + output)
-//   })
-
-// })
-
 app.get('/', (req, res) => {
-
-  //writing to file with a query
-  fs.writeFileSync('data.json', '')
-  var toSend = [];
-  con.query("SELECT * FROM animal LIMIT 3", function (err, result, fields) {
-    if (err) throw err;
-    console.log(result);
-    toSend = JSON.stringify(result)
-    fs.appendFileSync('data.json', toSend + "\n");
-    });
-
-  //reading from file
-  fs.readFile('data.json', 'utf8' , (err, data) => {
-    if (err) {
-      console.error(err)
-      return
-    }
-    output = data.split("\n");
-    //output contains each JSON block in an array, the last one is empty
-    res.send('Hello World! ' + output)
-  })
-
+  res.send('Hello World! ')
 })
 
-//KPI: 
+//###########################################################################################################
+//KPIs: Citizen Scientists 
 
-//KPI:
+citsciPromise1 = () =>{
+  return new Promise((resolve, reject)=>{
+      con.query("SELECT COUNT(DISTINCT(person_id)) AS 'Number of Citizen Scientists providing images (all time)' FROM photo",  (error, results)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(results);
+      });
+  });
+};
 
-//KPI:
+citsciPromise2 = () =>{
+  return new Promise((resolve, reject)=>{
+      con.query("SELECT COUNT(DISTINCT(person_id)) AS 'Number of Citizen Scientists providing images (active)' FROM photo WHERE DATEDIFF(NOW(),uploaded) <= 365",  (error, results)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(results);
+      });
+  });
+};
+
+citsciPromise3 = () =>{
+  return new Promise((resolve, reject)=>{
+      con.query("SELECT COUNT(DISTINCT(person_id)) AS 'Number of Citizen Scientists classifying images (all time)' FROM animal",  (error, results)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(results);
+      });
+  });
+};
+
+citsciPromise4 = () =>{
+  return new Promise((resolve, reject)=>{
+      con.query("SELECT COUNT(DISTINCT(person_id)) AS 'Number of Citizen Scientists providing images (active)' FROM animal WHERE DATEDIFF(NOW(),timestamp) <= 365",  (error, results)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(results);
+      });
+  });
+};
+
+app.get('/citsci', async (req, res) => {
+  const promise1= citsciPromise1();
+  const promise2= citsciPromise2();
+  const promise3= citsciPromise3();
+  const promise4= citsciPromise4();
+  
+  const promises =[promise1, promise2, promise3,promise4];
+  
+  try{
+      const result = await Promise.all(promises);
+      console.log(result)
+      res.send(result)
+  } catch(error){
+      console.log(error)
+  }
+})
+//###########################################################################################################
+
+
+//###########################################################################################################
+//KPIs: Image Sequences
+
+imgseqPromise1 = () =>{
+  return new Promise((resolve, reject)=>{
+      con.query("SELECT COUNT(DISTINCT(DATE(uploaded))) AS 'Number of camera days (all time)' FROM photo;",  (error, results)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(results);
+      });
+  });
+};
+
+imgseqPromise2 = () =>{
+  return new Promise((resolve, reject)=>{
+      con.query("SELECT COUNT(DISTINCT(DATE(uploaded))) AS 'Number of camera days (past 12 months)' FROM photo WHERE DATEDIFF(NOW(),uploaded) <= 365;",  (error, results)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(results);
+      });
+  });
+};
+
+app.get('/imgseq', async (req, res) => {
+  const promise1= imgseqPromise1();
+  const promise2= imgseqPromise2();
+  
+  const promises =[promise1, promise2];
+  
+  try{
+      const result = await Promise.all(promises);
+      console.log(result)
+      res.send(result)
+  } catch(error){
+      console.log(error)
+  }
+})
+//###########################################################################################################
+
+
+//###########################################################################################################
+//KPIs: Classification
+
+classPromise1 = () =>{
+  return new Promise((resolve, reject)=>{
+      con.query("SELECT COUNT(*) AS 'Number of classification events' FROM animal;",  (error, results)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(results);
+      });
+  });
+};
+
+classPromise2 = () =>{
+  return new Promise((resolve, reject)=>{
+      con.query("SELECT COUNT(DISTINCT photo.sequence_id, animal.person_id) AS 'Number of animals (mammals/birds) identified' FROM animal, photo WHERE photo.photo_id = animal.photo_id;",  (error, results)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(results);
+      });
+  });
+};
+
+classPromise3 = () =>{
+  return new Promise((resolve, reject)=>{
+      con.query("SELECT COUNT(*) AS 'Number of classification events' FROM animal;",  (error, results)=>{ //TODO
+          if(error){
+              return reject(error);
+          }
+          return resolve(results);
+      });
+  });
+};
+
+app.get('/class', async (req, res) => {
+  const promise1= classPromise1();
+  const promise2= classPromise2();
+  const promise3= classPromise3();
+  
+  const promises =[promise1, promise2, promise3];
+  
+  try{
+      const result = await Promise.all(promises);
+      console.log(result)
+      res.send(result)
+  } catch(error){
+      console.log(error)
+  }
+})
+//###########################################################################################################
 
 //KPI:
 
