@@ -160,7 +160,7 @@ classPromise2 = () =>{
 
 classPromise3 = () =>{
   return new Promise((resolve, reject)=>{
-      con.query("SELECT COUNT(*) AS 'Number of classification events' FROM animal;",  (error, results)=>{ //TODO
+      con.query("SELECT COUNT(*)  AS 'Number of sequences with complete classification' FROM (SELECT photo.sequence_id, COUNT(*) AS totals FROM animal, photo WHERE animal.photo_id = photo.photo_id GROUP BY photo.sequence_id) AS sequences WHERE sequences.totals >= 3;",  (error, results)=>{ //TODO
           if(error){
               return reject(error);
           }
@@ -186,11 +186,11 @@ app.get('/class', async (req, res) => {
 })
 //###########################################################################################################
 
-//KPI:
+//KPIs: Quantity/quality/coverage of data in UK
 
-//KPI:
+//KPIs:
 
-//KPI:
+//KPIs:
 
 
 module.exports = app;
