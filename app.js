@@ -22,7 +22,8 @@ console.log("Connected to KPI database!");
 //begin queries
 
 app.get('/', (req, res) => {
-  res.send('Hello World! ')
+  //res.send('Hello World! ')
+  res.redirect('/citsci');
 })
 
 //###########################################################################################################
@@ -187,6 +188,30 @@ app.get('/class', async (req, res) => {
 //###########################################################################################################
 
 //KPIs: Quantity/quality/coverage of data in UK
+qPromise1 = () =>{
+  return new Promise((resolve, reject)=>{
+      con.query("SELECT COUNT(*) AS 'Number of 10k cells for which we have some records' FROM (SELECT COUNT(*) FROM site GROUP BY grid_ref) AS grids;",  (error, results)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(results);
+      });
+  });
+};
+
+app.get('/ukdata', async (req, res) => {
+  const promise1= qPromise1();
+  
+  const promises =[promise1];
+  
+  try{
+      const result = await Promise.all(promises);
+      console.log(result)
+      res.send(result)
+  } catch(error){
+      console.log(error)
+  }
+})
 
 //KPIs:
 
