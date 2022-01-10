@@ -1,7 +1,9 @@
 const express = require('express')
 var mysql = require('mysql');
 const fs = require('fs');
-const app = express()
+const app = express();
+app.use(express.static('client'));
+//const path = require('path');
 
 //############################################
 //create connection and connect:
@@ -19,12 +21,19 @@ console.log("Connected to KPI database!");
 //#############################################
 
 
+//begin different kpi pages
+
+// app.get('/kpi1', (req, res) => {
+//     res.sendFile(path.join(__dirname, '/kpi1.html'));
+//   })
+
 //begin queries
 
 app.get('/', (req, res) => {
   //res.send('Hello World! ')
   res.redirect('/citsci');
 })
+
 
 //###########################################################################################################
 //KPIs: Citizen Scientists 
