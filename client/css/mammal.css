@@ -6,9 +6,12 @@
 body{
 	font-family: arial;
 	background-color: #e6eded;
+	width: 100%;
+	height: auto;
 }
 .kuang1{
 	top: 0;
+	position: fixed;
 	background-color: #32553F;
 	height: 3.5rem;
 	width: 100%;
@@ -37,7 +40,7 @@ body{
 	color: #00AF68;
 	}
 .kuang2{
-	margin-top: 2%;
+	margin-top: 5%;
 	margin-left: 14%;
 	margin-right: 15%;
 	background-color: #E2F5F2;
@@ -47,10 +50,10 @@ body{
 }
 .kuang2 ul li{
 	font-size: 1.2rem;
-	margin-left: 3rem;
+	margin-left: 3%;
 	float: left;
 	background-color: #3fbf86;
-	padding: 0.8rem 1.2rem;
+	padding: 1% 1.2%;
 	color: azure;
 	display: inline-block;
 }
