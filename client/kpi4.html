@@ -4,6 +4,27 @@
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="./css/mammal.css">
 		<title></title>
+
+		<script>
+
+			function datastring(object){
+				for (const x in object){
+					return x + ": " + object[x]
+				}
+			}
+			
+			const xhttp = new XMLHttpRequest();
+
+			xhttp.onload = function() {
+				data = JSON.parse(this.responseText);
+				console.log(data);
+				document.getElementById("c1").innerHTML = datastring(data[0][0]);
+			}
+
+			xhttp.open("GET", "ukdata");
+			xhttp.send();
+
+		</script>
 	</head>
 	<body class="kuang">
 		<header>
@@ -31,7 +52,7 @@
 				</ul>
 			</nav>
 			<div class="da">
-				<div class="c1">data1</div>
+				<div class="c1" id="c1">data1</div>
 				<div class="c2">data2</div>
 				<div class="c3">data3</div>
 			</div>			
