@@ -4,6 +4,45 @@
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="./css/mammal.css">
 		<title></title>
+		<script>
+		window.onload = function () {
+		
+		var chart = new CanvasJS.Chart("chartContainer", {
+			exportEnabled: true,
+			animationEnabled: true,
+			title:{
+				text: "Other income"
+			},
+			legend:{
+				cursor: "pointer",
+				itemclick: explodePie
+			},
+			data: [{
+				type: "pie",
+				showInLegend: true,
+				toolTipContent: "{name}: <strong>{y}%</strong>",
+				indexLabel: "{name} - {y}%",
+				dataPoints: [
+					{ y: 26, name: "advertising", exploded: true },
+					{ y: 20, name: "sponsorship" },
+					{ y: 5, name: "donations" },
+					{ y: 22, name: "subscriptions"}
+				]
+			}]
+		});
+		chart.render();
+		}
+		
+		function explodePie (e) {
+			if(typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+				e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+			} else {
+				e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+			}
+			e.chart.render();
+		
+		}
+		</script>
 	</head>
 	<body class="kuang">
 		<header>
@@ -34,7 +73,9 @@
 				<div class="f1">data1</div>
 				<div class="f2">data2</div>
 				<div class="f3">
-					<script src="pie_chart.js"></script>
+					<!-- pie chart -->
+				<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+				<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 				</div>
 			</div>
 			

@@ -4,7 +4,43 @@
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="./css/mammal.css">
 		<title></title>
-
+		<script>
+		window.onload = function () {
+		
+		var chart = new CanvasJS.Chart("chartContainer", {
+			theme: "light2",
+			animationEnabled: true,
+			title: {
+				text: "Number of sequences with 'complete' classification "
+			},
+			subtitles: [{
+				text: "United Kingdom, 2016",
+				fontSize: 16
+			}],
+			data: [{
+				type: "pie",
+				indexLabelFontSize: 18,
+				radius: 80,
+				indexLabel: "{label} - {y}",
+				yValueFormatString: "###0.0\"%\"",
+				click: explodePie,
+				dataPoints: [
+					{ y: 42, label: "Gas" },
+					{ y: 3.1, label: "Other Fuels" }
+				]
+			}]
+		});
+		chart.render();
+		
+		function explodePie(e) {
+			for(var i = 0; i < e.dataSeries.dataPoints.length; i++) {
+				if(i !== e.dataPointIndex)
+					e.dataSeries.dataPoints[i].exploded = false;
+			}
+		}
+		 
+		}
+		</script>
 		<script>
 
 			function datastring(object){
@@ -58,7 +94,10 @@
 				<div class="ds2" id="ds2">data2</div>
 				<div class="ds3" id="ds3">data3</div>
 				<div class="ds4">
-					<script src="path.js"></script>
+					<!-- pie chart -->
+					<div id="chartContainer" style="height: 370px; width: 100%;">
+					<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+					</div>
 				</div>
 				<div class="ds5">data5</div>
 			</div>
