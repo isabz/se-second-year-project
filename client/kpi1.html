@@ -4,7 +4,70 @@
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="./css/mammal.css">
 		<title></title>
-
+    	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		<script>
+		window.onload = function () {
+		
+		var chart = new CanvasJS.Chart("chartContainer", {
+			theme:"light2",
+			animationEnabled: true,
+			title:{
+				text: "Time cost"
+			},
+			axisY :{
+				title: "Time",
+				suffix: "min"
+			},
+			toolTip: {
+				shared: "true"
+			},
+			legend:{
+				cursor:"pointer",
+				itemclick : toggleDataSeries
+			},
+			data: [{
+				type: "spline",
+				visible: false,
+				showInLegend: true,
+				yValueFormatString: "##.00mn",
+				name: "Classification",
+				dataPoints: [
+					{ label: "Date. 1", y: 2.22 },
+					{ label: "Date. 2", y: 2.20 },
+					{ label: "Date. 3", y: 2.44 },
+					{ label: "Ep. 8", y: 2.72 },
+					{ label: "Ep. 9", y: 2.66 },
+					{ label: "Ep. 10", y: 3.04 }
+				]
+			},
+			{
+				type: "spline", 
+				showInLegend: true,
+				visible: false,
+				yValueFormatString: "##.00mn",
+				name: "Training",
+				dataPoints: [
+					{ label: "Ep. 1", y: 3.86 },
+					{ label: "Ep. 2", y: 3.76 },
+					{ label: "Ep. 3", y: 3.77 },
+					{ label: "Ep. 9", y: 3.38 },
+					{ label: "Ep. 10", y: 4.20 }
+				]
+			}]
+		});
+		chart.render();
+		
+		function toggleDataSeries(e) {
+			if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible ){
+				e.dataSeries.visible = false;
+			} else {
+				e.dataSeries.visible = true;
+			}
+			chart.render();
+		}
+		
+		}
+		</script>
 		<script>
 
 			function datastring(object){
@@ -28,6 +91,9 @@
 			xhttp.send();
 
 		</script>
+		 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		        crossorigin="anonymous"></script>
 	</head>
 	<body id="main" class="kuang">
 		<header>
@@ -44,6 +110,28 @@
 					<li class="li1"><a href="http://127.0.0.1:8848/kpi1.html">KPIS</a></li>
 				</ul>				
 			</nav>
+<!-- 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			  <a class="navbar-brand" href="#">Navbar</a>
+			  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			    <span class="navbar-toggler-icon"></span>
+			  </button>
+			  <div class="collapse navbar-collapse" id="navbarNav">
+			    <ul class="navbar-nav">
+			      <li class="nav-item active">
+			        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" href="#">Features</a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" href="#">Pricing</a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link disabled" href="#">Disabled</a>
+			      </li>
+			    </ul>
+			  </div>
+			</nav> -->
 			<nav class="kuang2">
 				<ul>
 					<li><a href="http://127.0.0.1:8848/kpi1.html">Citizen Scientists</a></li>
@@ -58,7 +146,11 @@
 				<div class="ds1" id="ds1">data1</div>
 				<div class="ds2" id="ds2">data2</div>
 				<div class="ds3" id="ds3">data3</div>
-				<div class="ds4" id="ds4">data4</div>
+				<div class="ds4" id="ds4">
+					<!-- line chart -->
+					<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+					<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+				</div>
 				<div class="ds5" id="ds5">data5</div>
 			</div>
 			
