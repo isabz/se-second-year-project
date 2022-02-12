@@ -7,12 +7,20 @@ app.use(express.static('client'));
 
 //############################################
 //create connection and connect:
+
+// var con = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "password",
+//   database: "kpi"
+// });
+
 var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "password",
-  database: "kpi"
-});
+    host: "kpi.czhwfl9qqmr4.eu-west-2.rds.amazonaws.com",
+    user: "admin",
+    password: "group12db",
+    database: "kpi"
+  });
 
 con.connect(function(err) {
 if (err) throw err;
@@ -42,12 +50,12 @@ queryPromise = (query) =>{
 //KPIs: Citizen Scientists 
 
 citscipromises = [
-"SELECT COUNT(DISTINCT(person_id)) AS 'Number of Citizen Scientists providing images (all time)' FROM photo",
-"SELECT COUNT(DISTINCT(person_id)) AS 'Number of Citizen Scientists providing images (active)' FROM photo WHERE DATEDIFF(NOW(),uploaded) <= 365",
-"SELECT COUNT(DISTINCT(person_id)) AS 'Number of Citizen Scientists classifying images (all time)' FROM animal",
-"SELECT COUNT(DISTINCT(person_id)) AS 'Number of Citizen Scientists providing images (active)' FROM animal WHERE DATEDIFF(NOW(),timestamp) <= 365",
-"SELECT year(uploaded) AS 'Year',COUNT(DISTINCT(person_id)) AS 'Number of active users uploading' FROM photo GROUP BY year(uploaded)",
-"SELECT year(timestamp) AS 'Year',COUNT(DISTINCT(person_id)) AS 'Number of active users classifying' FROM animal GROUP BY year(timestamp)"
+"SELECT COUNT(DISTINCT(person_id)) AS 'Number of Citizen Scientists providing images (all time)' FROM Photo",
+"SELECT COUNT(DISTINCT(person_id)) AS 'Number of Citizen Scientists providing images (active)' FROM Photo WHERE DATEDIFF(NOW(),uploaded) <= 365",
+"SELECT COUNT(DISTINCT(person_id)) AS 'Number of Citizen Scientists classifying images (all time)' FROM Animal",
+"SELECT COUNT(DISTINCT(person_id)) AS 'Number of Citizen Scientists providing images (active)' FROM Animal WHERE DATEDIFF(NOW(),timestamp) <= 365",
+"SELECT year(uploaded) AS 'Year',COUNT(DISTINCT(person_id)) AS 'Number of active users uploading' FROM Photo GROUP BY year(uploaded)",
+"SELECT year(timestamp) AS 'Year',COUNT(DISTINCT(person_id)) AS 'Number of active users classifying' FROM Animal GROUP BY year(timestamp)"
 ]
 
 app.get('/citsci', async (req, res) => {
@@ -71,10 +79,10 @@ app.get('/citsci', async (req, res) => {
 //KPIs: Image Sequences
 
 imgseqpromises = [
-"SELECT COUNT(DISTINCT(DATE(uploaded))) AS 'Number of camera days (all time)' FROM photo;",
-"SELECT COUNT(DISTINCT(DATE(uploaded))) AS 'Number of camera days (past 12 months)' FROM photo WHERE DATEDIFF(NOW(),uploaded) <= 365;",
-"SELECT year(timestamp) as 'Year of capture',count(*) as 'Total number of uploads' FROM kpi.upload GROUP BY year(timestamp)",
-"SELECT year(uploaded) AS 'Year', COUNT(DISTINCT(DATE(uploaded))) AS 'Number of camera days' FROM photo GROUP BY year(uploaded)"
+"SELECT COUNT(DISTINCT(DATE(uploaded))) AS 'Number of camera days (all time)' FROM Photo;",
+"SELECT COUNT(DISTINCT(DATE(uploaded))) AS 'Number of camera days (past 12 months)' FROM Photo WHERE DATEDIFF(NOW(),uploaded) <= 365;",
+"SELECT year(timestamp) as 'Year of capture',count(*) as 'Total number of uploads' FROM kpi.Upload GROUP BY year(timestamp)",
+"SELECT year(uploaded) AS 'Year', COUNT(DISTINCT(DATE(uploaded))) AS 'Number of camera days' FROM Photo GROUP BY year(uploaded)"
 ]
 
 app.get('/imgseq', async (req, res) => {
@@ -98,10 +106,10 @@ app.get('/imgseq', async (req, res) => {
 //KPIs: Classification
 
 classpromises = [
-"SELECT COUNT(*) AS 'Number of classification events' FROM animal;",
-"SELECT COUNT(DISTINCT photo.sequence_id, animal.person_id) AS 'Number of animals (mammals/birds) identified' FROM animal, photo WHERE photo.photo_id = animal.photo_id;",
-"SELECT COUNT(*)  AS 'Number of sequences with complete classification' FROM (SELECT photo.sequence_id, COUNT(*) AS totals FROM animal, photo WHERE animal.photo_id = photo.photo_id GROUP BY photo.sequence_id) AS sequences WHERE sequences.totals >= 3;",
-"SELECT year(timestamp),COUNT(*) AS 'Number of classification events' FROM animal GROUP BY year(timestamp)"
+"SELECT COUNT(*) AS 'Number of classification events' FROM Animal;",
+"SELECT COUNT(DISTINCT Photo.sequence_id, Animal.person_id) AS 'Number of animals (mammals/birds) identified' FROM Animal, Photo WHERE Photo.photo_id = Animal.photo_id;",
+"SELECT COUNT(*)  AS 'Number of sequences with complete classification' FROM (SELECT Photo.sequence_id, COUNT(*) AS totals FROM Animal, Photo WHERE Animal.photo_id = Photo.photo_id GROUP BY Photo.sequence_id) AS sequences WHERE sequences.totals >= 3;",
+"SELECT year(timestamp),COUNT(*) AS 'Number of classification events' FROM Animal GROUP BY year(timestamp)"
 ]
 
 app.get('/class', async (req, res) => {
@@ -123,7 +131,7 @@ app.get('/class', async (req, res) => {
 
 
 //KPIs: Quantity/quality/coverage of data in UK
-qpromises = ["SELECT COUNT(*) AS 'Number of 10k cells for which we have some records' FROM (SELECT COUNT(*) FROM site GROUP BY grid_ref) AS grids;"
+qpromises = ["SELECT COUNT(*) AS 'Number of 10k cells for which we have some records' FROM (SELECT COUNT(*) FROM Site GROUP BY grid_ref) AS grids;"
 //number of cells by year maybe
 ]
 
