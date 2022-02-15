@@ -53,7 +53,7 @@ citscipromises = [
 "SELECT COUNT(DISTINCT(person_id)) AS 'Number of Citizen Scientists providing images (all time)' FROM Photo",
 "SELECT COUNT(DISTINCT(person_id)) AS 'Number of Citizen Scientists providing images (active)' FROM Photo WHERE DATEDIFF(NOW(),uploaded) <= 365",
 "SELECT COUNT(DISTINCT(person_id)) AS 'Number of Citizen Scientists classifying images (all time)' FROM Animal",
-"SELECT COUNT(DISTINCT(person_id)) AS 'Number of Citizen Scientists providing images (active)' FROM Animal WHERE DATEDIFF(NOW(),timestamp) <= 365",
+"SELECT COUNT(DISTINCT(person_id)) AS 'Number of Citizen Scientists classifying images (active)' FROM Animal WHERE DATEDIFF(NOW(),timestamp) <= 365",
 "SELECT year(uploaded) AS 'Year',COUNT(DISTINCT(person_id)) AS 'Number of active users uploading' FROM Photo GROUP BY year(uploaded)",
 "SELECT year(timestamp) AS 'Year',COUNT(DISTINCT(person_id)) AS 'Number of active users classifying' FROM Animal GROUP BY year(timestamp)"
 ]
