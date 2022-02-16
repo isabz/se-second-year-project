@@ -6,14 +6,6 @@ app.use(express.static('client'));
 //const path = require('path');
 
 //############################################
-//create connection and connect:
-
-// var con = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "password",
-//   database: "kpi"
-// });
 
 var con = mysql.createConnection({
     host: "kpi.czhwfl9qqmr4.eu-west-2.rds.amazonaws.com",
@@ -47,6 +39,28 @@ queryPromise = (query) =>{
     });
 };
 
+
+//then get all the data and write it to file
+async function getData(queries,filename) {
+
+    const promises =[];
+    for (const p of queries){
+        const newp = queryPromise(p)
+        promises.push(newp)
+    }
+    
+    //write results to file
+    try{
+        const result = await Promise.all(promises);
+        console.log(result)
+        towrite = JSON.stringify(result)
+        fs.writeFileSync(filename,towrite)
+        console.log("Wrote to " + filename + "!")
+    } catch(error){
+        console.log(error)
+    }
+}
+
 //KPIs: Citizen Scientists 
 
 citscipromises = [
@@ -58,24 +72,6 @@ citscipromises = [
 "SELECT year(timestamp) AS 'Year',COUNT(DISTINCT(person_id)) AS 'Number of active users classifying' FROM Animal GROUP BY year(timestamp)"
 ]
 
-app.get('/citsci', async (req, res) => {
-    const promises =[];
-    for (const p of citscipromises){
-        const newp = queryPromise(p)
-        promises.push(newp)
-        console.log(promises)
-    }
-    
-    try{
-        const result = await Promise.all(promises);
-        console.log(result)
-        res.send(result)
-    } catch(error){
-        console.log(error)
-    }
-  })
-
-
 //KPIs: Image Sequences
 
 imgseqpromises = [
@@ -85,72 +81,68 @@ imgseqpromises = [
 "SELECT year(uploaded) AS 'Year', COUNT(DISTINCT(DATE(uploaded))) AS 'Number of camera days' FROM Photo GROUP BY year(uploaded)"
 ]
 
-app.get('/imgseq', async (req, res) => {
-    const promises =[];
-    for (const p of imgseqpromises){
-        const newp = queryPromise(p)
-        promises.push(newp)
-        console.log(promises)
-    }
-    
-    try{
-        const result = await Promise.all(promises);
-        console.log(result)
-        res.send(result)
-    } catch(error){
-        console.log(error)
-    }
-  })
-
-
 //KPIs: Classification
 
 classpromises = [
-"SELECT COUNT(*) AS 'Number of classification events' FROM Animal;",
-"SELECT COUNT(DISTINCT Photo.sequence_id, Animal.person_id) AS 'Number of animals (mammals/birds) identified' FROM Animal, Photo WHERE Photo.photo_id = Animal.photo_id;",
-"SELECT COUNT(*)  AS 'Number of sequences with complete classification' FROM (SELECT Photo.sequence_id, COUNT(*) AS totals FROM Animal, Photo WHERE Animal.photo_id = Photo.photo_id GROUP BY Photo.sequence_id) AS sequences WHERE sequences.totals >= 3;",
-"SELECT year(timestamp),COUNT(*) AS 'Number of classification events' FROM Animal GROUP BY year(timestamp)"
+    "SELECT COUNT(*) AS 'Number of classification events' FROM Animal;",
+    "SELECT COUNT(DISTINCT Photo.sequence_id, Animal.person_id) AS 'Number of animals (mammals/birds) identified' FROM Animal, Photo WHERE Photo.photo_id = Animal.photo_id;",
+    "SELECT COUNT(*)  AS 'Number of sequences with complete classification' FROM (SELECT Photo.sequence_id, COUNT(*) AS totals FROM Animal, Photo WHERE Animal.photo_id = Photo.photo_id GROUP BY Photo.sequence_id) AS sequences WHERE sequences.totals >= 3;",
+    "SELECT year(timestamp),COUNT(*) AS 'Number of classification events' FROM Animal GROUP BY year(timestamp)"
 ]
-
-app.get('/class', async (req, res) => {
-    const promises =[];
-    for (const p of classpromises){
-        const newp = queryPromise(p)
-        promises.push(newp)
-        console.log(promises)
-    }
-    
-    try{
-        const result = await Promise.all(promises);
-        console.log(result)
-        res.send(result)
-    } catch(error){
-        console.log(error)
-    }
-  })
-
 
 //KPIs: Quantity/quality/coverage of data in UK
 qpromises = ["SELECT COUNT(*) AS 'Number of 10k cells for which we have some records' FROM (SELECT COUNT(*) FROM Site GROUP BY grid_ref) AS grids;"
 //number of cells by year maybe
 ]
 
+getData(citscipromises,"citsci.json");
+getData(imgseqpromises,"imgseq.json");
+getData(classpromises,"class.json");
+getData(qpromises,"datacoverage.json");
+
+app.get('/citsci', async (req, res) => {
+    fs.readFile('citsci.json', function (err,data) {
+        if (err) {
+          return console.log(err);
+        }
+        data = JSON.parse(data)
+        console.log(data);
+        res.json(data)
+      });
+})
+
+app.get('/imgseq', async (req, res) => {
+    fs.readFile('imgseq.json', function (err,data) {
+        if (err) {
+          return console.log(err);
+        }
+        data = JSON.parse(data)
+        console.log(data);
+        res.json(data)
+      });
+})
+
+app.get('/class', async (req, res) => {
+    fs.readFile('class.json', function (err,data) {
+        if (err) {
+          return console.log(err);
+        }
+        data = JSON.parse(data)
+        console.log(data);
+        res.json(data)
+      });
+})
+
 app.get('/ukdata', async (req, res) => {
-    const promises =[];
-    for (const p of qpromises){
-        const newp = queryPromise(p)
-        promises.push(newp)
-        console.log(promises)
-    }
-    
-    try{
-        const result = await Promise.all(promises);
-        console.log(result)
-        res.send(result)
-    } catch(error){
-        console.log(error)
-    }
-  })
+    fs.readFile('datacoverage.json', function (err,data) {
+        if (err) {
+          return console.log(err);
+        }
+        data = JSON.parse(data)
+        console.log(data);
+        res.json(data)
+      });
+})
 
 //KPIs:
 
