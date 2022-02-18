@@ -4,17 +4,37 @@
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="./css/mammal.css">
 		<title></title>
+		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		
 			<script>
-			window.onload = function () {
+			function datastring(object){
+			for (const x in object){
+				return x + ": " + object[x]
+			}
+		}
 			
+			function graphdata(array,str){
+				let data = []
+				for (let item in array){
+					object = array[item];
+					data.push({x: new Date(object.Year,0), y:object[str]})
+				}
+				console.log(data)
+				return(data)
+			}
+
+			const xhttp = new XMLHttpRequest();
+			window.onload = function () {
+			data = JSON.parse(this.responseText);
+			console.log(data);
+			document.getElementById("is1").innerHTML = datastring(data[0][0]);
+			document.getElementById("is2").innerHTML = datastring(data[1][0]);
+			line1 = graphdata(data[2],'Number of camera days (all time)');
+			line2 = graphdata(data[3],'Number of camera days (past 12 months)');
 			var chart = new CanvasJS.Chart("chartContainer", {
 				animationEnabled: true,
 				theme: "light2",
-				title:{
-					text: "Image sequences"
-				},
 				axisX:{
-					valueFormatString: "DD MMM",
 					crosshair: {
 						enabled: true,
 						snapToDataPoint: true
@@ -32,37 +52,23 @@
 				},  
 				legend:{
 					cursor:"pointer",
-					verticalAlign: "bottom",
-					horizontalAlign: "left",
-					dockInsidePlotArea: true,
 					itemclick: toogleDataSeries
 				},
 				data: [{
 					type: "line",
 					showInLegend: true,
-					name: "all-time",
+					name: "Number of camera days (all time)",
 					markerType: "square",
 					xValueFormatString: "DD MMM, YYYY",
 					color: "#F08080",
-					dataPoints: [
-						{ x: new Date(2017, 0, 3), y: 650 },
-						{ x: new Date(2017, 0, 4), y: 700 },
-						{ x: new Date(2017, 0, 5), y: 710 },
-						{ x: new Date(2017, 0, 6), y: 658 },
-					]
+					dataPoints: line1
 				},
 				{
 					type: "line",
 					showInLegend: true,
-					name: "within last 12 months",
+					name: "Number of camera days (past 12 months)",
 					lineDashType: "dash",
-					dataPoints: [
-						{ x: new Date(2017, 0, 3), y: 510 },
-						{ x: new Date(2017, 0, 4), y: 560 },
-						{ x: new Date(2017, 0, 5), y: 540 },
-						{ x: new Date(2017, 0, 6), y: 558 },
-						{ x: new Date(2017, 0, 7), y: 544 },
-					]
+					dataPoints: line2
 				}]
 			});
 			chart.render();
@@ -126,15 +132,14 @@
 				</ul>
 			</nav>
 			<div class="da">
-				<div class="is1" id="is1">
-				<!-- two line chart -->
+				<div class="is1" id="is1"></div>
+				<div class="is2" id="is2">
+					<!-- two line chart -->
 					<div id="chartContainer" style="height: 370px; width: 100%;"></div>
-					<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 				</div>
-				<div class="is2" id="is2">data2</div>
 			</div>
 			
 		</header>
-
+		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 	</body>
 </html>
