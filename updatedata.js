@@ -1,8 +1,5 @@
-const express = require('express')
 var mysql = require('mysql');
 const fs = require('fs');
-const app = express();
-app.use(express.static('client'));
 
 //############################################
 
@@ -29,12 +26,6 @@ if (err) throw err;
 console.log("Connected to KPI database!");
 });
 //#############################################
-
-//begin queries
-
-app.get('/', (req, res) => {
-  res.redirect('/citsci');
-})
 
 //here is the promise to use for all queries
 queryPromise = (query) =>{
@@ -115,49 +106,3 @@ getData(citscipromises,"citsci.json");
 getData(imgseqpromises,"imgseq.json");
 getData(classpromises,"class.json");
 getData(qpromises,"datacoverage.json");
-
-app.get('/citsci', async (req, res) => {
-    fs.readFile('citsci.json', function (err,data) {
-        if (err) {
-          return console.log(err);
-        }
-        data = JSON.parse(data)
-        console.log(data);
-        res.json(data)
-      });
-})
-
-app.get('/imgseq', async (req, res) => {
-    fs.readFile('imgseq.json', function (err,data) {
-        if (err) {
-          return console.log(err);
-        }
-        data = JSON.parse(data)
-        console.log(data);
-        res.json(data)
-      });
-})
-
-app.get('/class', async (req, res) => {
-    fs.readFile('class.json', function (err,data) {
-        if (err) {
-          return console.log(err);
-        }
-        data = JSON.parse(data)
-        console.log(data);
-        res.json(data)
-      });
-})
-
-app.get('/ukdata', async (req, res) => {
-    fs.readFile('datacoverage.json', function (err,data) {
-        if (err) {
-          return console.log(err);
-        }
-        data = JSON.parse(data)
-        console.log(data);
-        res.json(data)
-      });
-})
-
-module.exports = app;
