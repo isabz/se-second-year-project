@@ -24,87 +24,69 @@
 			}
 
 			const xhttp = new XMLHttpRequest();
-			window.onload = function () {
-			data = JSON.parse(this.responseText);
-			console.log(data);
-			document.getElementById("is1").innerHTML = datastring(data[0][0]);
-			document.getElementById("is2").innerHTML = datastring(data[1][0]);
-			line1 = graphdata(data[2],'Number of camera days (all time)');
-			line2 = graphdata(data[3],'Number of camera days (past 12 months)');
-			var chart = new CanvasJS.Chart("chartContainer", {
-				animationEnabled: true,
-				theme: "light2",
-				axisX:{
-					crosshair: {
-						enabled: true,
-						snapToDataPoint: true
-					}
-				},
-				axisY: {
-					title: "Number of Camera-days",
-					includeZero: true,
-					crosshair: {
-						enabled: true
-					}
-				},
-				toolTip:{
-					shared:true
-				},  
-				legend:{
-					cursor:"pointer",
-					itemclick: toogleDataSeries
-				},
-				data: [{
-					type: "line",
-					showInLegend: true,
-					name: "Number of camera days (all time)",
-					markerType: "square",
-					xValueFormatString: "DD MMM, YYYY",
-					color: "#F08080",
-					dataPoints: line1
-				},
-				{
-					type: "line",
-					showInLegend: true,
-					name: "Number of camera days (past 12 months)",
-					lineDashType: "dash",
-					dataPoints: line2
-				}]
-			});
-			chart.render();
-			
-			function toogleDataSeries(e){
-				if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-					e.dataSeries.visible = false;
-				} else{
-					e.dataSeries.visible = true;
-				}
-				chart.render();
-			}
-			
-			}
-			</script>
-		<script>
-
-			function datastring(object){
-				for (const x in object){
-					return x + ": " + object[x]
-				}
-			}
-			
-			const xhttp = new XMLHttpRequest();
-
-			xhttp.onload = function() {
+			xhttp.onload = function () {
 				data = JSON.parse(this.responseText);
 				console.log(data);
 				document.getElementById("is1").innerHTML = datastring(data[0][0]);
-				document.getElementById("is2").innerHTML = datastring(data[1][0]);
+				document.getElementById("is1").innerHTML = datastring(data[1][0]);
+				line1 = graphdata(data[2],'Total number of uploads');
+				line2 = graphdata(data[3],'Number of camera days');
+				var chart = new CanvasJS.Chart("chartContainer", {
+					animationEnabled: true,
+					theme: "light2",
+					axisX:{
+						crosshair: {
+							enabled: true,
+							snapToDataPoint: true
+						}
+					},
+					axisY: {
+						title: "Number of Camera-days",
+						includeZero: true,
+						crosshair: {
+							enabled: true
+						}
+					},
+					toolTip:{
+						shared:true
+					},  
+					legend:{
+						cursor:"pointer",
+						itemclick: toogleDataSeries
+					},
+					data: [{
+						type: "line",
+						showInLegend: true,
+						name: "Total number of uploads",
+						markerType: "square",
+						xValueFormatString: "DD MMM, YYYY",
+						color: "#F08080",
+						dataPoints: line1
+					},
+					{
+						type: "line",
+						showInLegend: true,
+						name: "Number of camera days",
+						lineDashType: "dash",
+						dataPoints: line2
+					}]
+				});
+				chart.render();
+				
+				function toogleDataSeries(e){
+					if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+						e.dataSeries.visible = false;
+					} else{
+						e.dataSeries.visible = true;
+					}
+					chart.render();
+				}			
 			}
-
+			
 			xhttp.open("GET", "imgseq");
 			xhttp.send();
+			</script>
 
-		</script>
 	</head>
 	<body class="kuang">
 		<header>

@@ -5,18 +5,37 @@
 		<link rel="stylesheet" href="./css/mammal.css">
 		<title></title>
 		<script>
-		window.onload = function () {
-		
+		function datastring(object){
+			for (const x in object){
+				return x + ": " + object[x]
+			}
+		}
+
+		function graphdata(array,str){
+			let data = []
+			for (let item in array){
+				object = array[item];
+				data.push({label:object[str], y:object[str]})
+			}
+			console.log(data)
+			return(data)
+		}
+
+		const xhttp = new XMLHttpRequest();
+
+		xhttp.onload = function() {
+		data = JSON.parse(this.responseText);
+					console.log(data);
+					document.getElementById("ds1").innerHTML = datastring(data[0][0]);
+					document.getElementById("ds2").innerHTML = datastring(data[1][0]);
+					document.getElementById("ds3").innerHTML = datastring(data[2][0]);
+					pie1 = graphdata(data[3],'Number of classification events');
 		var chart = new CanvasJS.Chart("chartContainer", {
 			theme: "light2",
 			animationEnabled: true,
 			title: {
-				text: "Number of sequences with 'complete' classification "
+				text: "Number of classification events"
 			},
-			subtitles: [{
-				text: "United Kingdom, 2016",
-				fontSize: 16
-			}],
 			data: [{
 				type: "pie",
 				indexLabelFontSize: 18,
@@ -24,10 +43,7 @@
 				indexLabel: "{label} - {y}",
 				yValueFormatString: "###0.0\"%\"",
 				click: explodePie,
-				dataPoints: [
-					{ y: 42, label: "Gas" },
-					{ y: 3.1, label: "Other Fuels" }
-				]
+				dataPoints: pie1
 			}]
 		});
 		chart.render();
@@ -40,28 +56,8 @@
 		}
 		 
 		}
-		</script>
-		<script>
-
-			function datastring(object){
-				for (const x in object){
-					return x + ": " + object[x]
-				}
-			}
-			
-			const xhttp = new XMLHttpRequest();
-
-			xhttp.onload = function() {
-				data = JSON.parse(this.responseText);
-				console.log(data);
-				document.getElementById("ds1").innerHTML = datastring(data[0][0]);
-				document.getElementById("ds2").innerHTML = datastring(data[1][0]);
-				document.getElementById("ds3").innerHTML = datastring(data[2][0]);
-			}
-
-			xhttp.open("GET", "class");
-			xhttp.send();
-
+		xhttp.open("GET", "class");
+		xhttp.send();
 		</script>
 	</head>
 	<body class="kuang">
