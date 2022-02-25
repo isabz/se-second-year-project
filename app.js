@@ -98,7 +98,7 @@ classpromises = [
     "SELECT COUNT(*) AS 'Number of classification events' FROM Animal;",
     "SELECT COUNT(DISTINCT Photo.sequence_id, Animal.person_id) AS 'Number of animals (mammals/birds) identified' FROM Animal, Photo WHERE Photo.photo_id = Animal.photo_id;",
     "SELECT COUNT(*)  AS 'Number of sequences with complete classification' FROM (SELECT Photo.sequence_id, COUNT(*) AS totals FROM Animal, Photo WHERE Animal.photo_id = Photo.photo_id GROUP BY Photo.sequence_id) AS sequences WHERE sequences.totals >= 3;",
-    "SELECT year(timestamp),COUNT(*) AS 'Number of classification events' FROM Animal GROUP BY year(timestamp)"
+    "SELECT year(timestamp) AS 'Year' ,COUNT(*) AS 'Number of classification events' FROM Animal GROUP BY year(timestamp)"
 ]
 
 //KPIs: Quantity/quality/coverage of data in UK
