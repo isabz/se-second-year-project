@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="./css/mammal.css">
+		<title></title>
+
+		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+		<script>
+		function datastring(object){
+			for (const x in object){
+				return x + ": " + object[x]
+			}
+		}
+
+		function graphdata(array,str){
+			let data = []
+			for (let item in array){
+				object = array[item];
+				data.push({x: new Date(object.Year,0), y:object[str]})
+				}
+			console.log(data)
+			return(data)
+		}
+
+		const xhttp = new XMLHttpRequest();
+
+		xhttp.onload = function() {
+		data = JSON.parse(this.responseText);
+					console.log(data);
+					document.getElementById("ds1").innerHTML = datastring(data[0][0]);
+					document.getElementById("ds2").innerHTML = datastring(data[1][0]);
+					document.getElementById("ds3").innerHTML = datastring(data[2][0]);
+					line1 = graphdata(data[3],'Number of classification events');
+					var chart = new CanvasJS.Chart("chartContainer", {
+					animationEnabled: true,
+					theme: "light2",
+					title:{
+						text: "Number of classification events"
+					},
+					data: [{        
+						type: "line",
+						indexLabelFontSize: 16,
+						dataPoints:line1
+					}]
+				});
+				chart.render();
+		}
+		xhttp.open("GET", "class");
+		xhttp.send();
+		</script>
+	</head>
+	<body class="kuang">
+		<header>
+			<nav class="kuang1">
+				<ul>
+					<li class="li"><a href="#">HOME</a></li>
+					<li class="li"><a href="#">ABOUT</a></li>
+					<li class="li"><a href="#">GET STARTED</a></li>
+					<li class="li"><a href="#">PROJECTS</a></li>
+					<li class="li"><a href="#">CONTRIBUTE</a></li>
+					<li class="li"><a href="#">LEARN</a></li>
+					<li class="li"><a href="#">COMMUNITY</a></li>
+					<li class="li"><a href="#">LOGIN</a></li>
+					<li class="li1"><a href="http://127.0.0.1:8848/kpi1.html">KPIS</a></li>
+				</ul>				
+			</nav>
+			<nav class="kuang2">
+				<ul>
+					<li><a href="http://127.0.0.1:8848/kpi1.html">Citizen Scientists</a></li>
+					<li><a href="http://127.0.0.1:8848/kpi2.html">Image Sequences</a></li>
+					<li><a href="http://127.0.0.1:8848/kpi3.html">Classification</a></li>
+					<li><a href="http://127.0.0.1:8848/kpi4.html">Data Coverage</a></li>
+					<li><a href="http://127.0.0.1:8848/kpi5.html">Impact</a></li>
+					<li><a href="http://127.0.0.1:8848/kpi6.html">Funding</a></li>
+				</ul>
+			</nav>
+			<div class="da">
+				<div class="ds1" id="ds1">data1</div>
+				<div class="ds2" id="ds2">data2</div>
+				<div class="ds3" id="ds3">data3</div>
+				<div class="ds4">
+					<!-- line chart -->
+					<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+					<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+					</div>
+				</div>
+				<div class="ds5">data5</div>
+			</div>
+			
+		</header>
+
+	</body>
+</html>
