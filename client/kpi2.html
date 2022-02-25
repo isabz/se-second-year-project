@@ -5,37 +5,8 @@
 		<link rel="stylesheet" href="./css/mammal.css">
 		<title></title>
 		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-		
-			<script>
-			function datastring(object){
-			for (const x in object){
-				return x + ": " + object[x]
-			}
-		}
-
-		function compare( a, b ) {
-			if ( a.x < b.x){
-				return -1;
-			}
-			if ( a.x > b.x ){
-				return 1;
-			}
-			return 0;
-		}
-
-			
-			function graphdata(array,str){
-				let data = []
-				for (let item in array){
-					object = array[item];
-					data.push({x: new Date(object.Year,0), y:object[str]})
-				}
-
-				data.sort(compare)
-				console.log(data)
-				return(data)
-			}
-
+		<script src="script.js"></script> 
+		<script>
 			const xhttp = new XMLHttpRequest();
 			xhttp.onload = function () {
 				data = JSON.parse(this.responseText);
@@ -80,7 +51,6 @@
 						type: "line",
 						showInLegend: true,
 						name: "Number of camera days",
-						lineDashType: "dash",
 						xValueFormatString: "YYYY",
 						dataPoints: line2
 					}]
@@ -99,7 +69,7 @@
 			
 			xhttp.open("GET", "imgseq");
 			xhttp.send();
-			</script>
+		</script>
 
 	</head>
 	<body class="kuang">

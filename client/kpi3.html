@@ -6,62 +6,34 @@
 		<title></title>
 
 		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
+		<script src="script.js"></script> 
 		<script>
-		function datastring(object){
-			for (const x in object){
-				return x + ": " + object[x]
+			const xhttp = new XMLHttpRequest();
+
+			xhttp.onload = function() {
+			data = JSON.parse(this.responseText);
+						console.log(data);
+						document.getElementById("ds1").innerHTML = datastring(data[0][0]);
+						document.getElementById("ds2").innerHTML = datastring(data[1][0]);
+						document.getElementById("ds3").innerHTML = datastring(data[2][0]);
+						line1 = graphdata(data[3],'Number of classification events');
+						var chart = new CanvasJS.Chart("chartContainer", {
+						animationEnabled: true,
+						theme: "light2",
+						title:{
+							text: "Number of classification events"
+						},
+						data: [{        
+							type: "line",
+							indexLabelFontSize: 16,
+							xValueFormatString: "YYYY",
+							dataPoints:line1
+						}]
+					});
+						chart.render();
 			}
-		}
-
-		function compare( a, b ) {
-			if ( a.x < b.x){
-				return -1;
-			}
-			if ( a.x > b.x ){
-				return 1;
-			}
-			return 0;
-		}
-
-		function graphdata(array,str){
-			let data = []
-			for (let item in array){
-				object = array[item];
-				data.push({x: new Date(object.Year,0), y:object[str]})
-				}
-
-			data.sort(compare)
-			console.log(data)
-			return(data)
-		}
-
-		const xhttp = new XMLHttpRequest();
-
-		xhttp.onload = function() {
-		data = JSON.parse(this.responseText);
-					console.log(data);
-					document.getElementById("ds1").innerHTML = datastring(data[0][0]);
-					document.getElementById("ds2").innerHTML = datastring(data[1][0]);
-					document.getElementById("ds3").innerHTML = datastring(data[2][0]);
-					line1 = graphdata(data[3],'Number of classification events');
-					var chart = new CanvasJS.Chart("chartContainer", {
-					animationEnabled: true,
-					theme: "light2",
-					title:{
-						text: "Number of classification events"
-					},
-					data: [{        
-						type: "line",
-						indexLabelFontSize: 16,
-						xValueFormatString: "YYYY",
-						dataPoints:line1
-					}]
-				});
-				chart.render();
-		}
-		xhttp.open("GET", "class");
-		xhttp.send();
+			xhttp.open("GET", "class");
+			xhttp.send();
 		</script>
 	</head>
 	<body class="kuang">
