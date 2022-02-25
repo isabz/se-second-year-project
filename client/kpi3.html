@@ -4,6 +4,9 @@
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="./css/mammal.css">
 		<title></title>
+
+		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
 		<script>
 		function datastring(object){
 			for (const x in object){
@@ -15,8 +18,8 @@
 			let data = []
 			for (let item in array){
 				object = array[item];
-				data.push({label:object[str], y:object[str]})
-			}
+				data.push({x: new Date(object.Year,0), y:object[str]})
+				}
 			console.log(data)
 			return(data)
 		}
@@ -29,32 +32,20 @@
 					document.getElementById("ds1").innerHTML = datastring(data[0][0]);
 					document.getElementById("ds2").innerHTML = datastring(data[1][0]);
 					document.getElementById("ds3").innerHTML = datastring(data[2][0]);
-					pie1 = graphdata(data[3],'Number of classification events');
-		var chart = new CanvasJS.Chart("chartContainer", {
-			theme: "light2",
-			animationEnabled: true,
-			title: {
-				text: "Number of classification events"
-			},
-			data: [{
-				type: "pie",
-				indexLabelFontSize: 18,
-				radius: 80,
-				indexLabel: "{label} - {y}",
-				yValueFormatString: "###0.0\"%\"",
-				click: explodePie,
-				dataPoints: pie1
-			}]
-		});
-		chart.render();
-		
-		function explodePie(e) {
-			for(var i = 0; i < e.dataSeries.dataPoints.length; i++) {
-				if(i !== e.dataPointIndex)
-					e.dataSeries.dataPoints[i].exploded = false;
-			}
-		}
-		 
+					line1 = graphdata(data[3],'Number of classification events');
+					var chart = new CanvasJS.Chart("chartContainer", {
+					animationEnabled: true,
+					theme: "light2",
+					title:{
+						text: "Number of classification events"
+					},
+					data: [{        
+						type: "line",
+						indexLabelFontSize: 16,
+						dataPoints:line1
+					}]
+				});
+				chart.render();
 		}
 		xhttp.open("GET", "class");
 		xhttp.send();
@@ -90,8 +81,8 @@
 				<div class="ds2" id="ds2">data2</div>
 				<div class="ds3" id="ds3">data3</div>
 				<div class="ds4">
-					<!-- pie chart -->
-					<div id="chartContainer" style="height: 370px; width: 100%;">
+					<!-- line chart -->
+					<div id="chartContainer" style="height: 300px; width: 100%;"></div>
 					<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 					</div>
 				</div>
