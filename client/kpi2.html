@@ -40,8 +40,8 @@
 			xhttp.onload = function () {
 				data = JSON.parse(this.responseText);
 				console.log(data);
-				document.getElementById("is1").innerHTML = datastring(data[0][0]);
-				document.getElementById("is1").innerHTML = datastring(data[1][0]);
+				document.getElementById("is3").innerHTML = datastring(data[0][0]);
+				document.getElementById("is4").innerHTML = datastring(data[1][0]);
 				line1 = graphdata(data[2],'Total number of uploads');
 				line2 = graphdata(data[3],'Number of camera days');
 				var chart = new CanvasJS.Chart("chartContainer", {
@@ -128,7 +128,10 @@
 				</ul>
 			</nav>
 			<div class="da">
-				<div class="is1" id="is1"></div>
+				<div class="is1" id="is1">
+					<div class="is3" id="is3"></div>
+					<div class="is4" id="is4"></div>
+				</div>
 				<div class="is2" id="is2">
 					<!-- two line chart -->
 					<div id="chartContainer" style="height: 370px; width: 100%;"></div>
