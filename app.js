@@ -88,7 +88,7 @@ citscipromises = [
 imgseqpromises = [
 "SELECT COUNT(DISTINCT(DATE(uploaded))) AS 'Number of camera days (all time)' FROM Photo;",
 "SELECT COUNT(DISTINCT(DATE(uploaded))) AS 'Number of camera days (past 12 months)' FROM Photo WHERE DATEDIFF(NOW(),uploaded) <= 365;",
-"SELECT year(timestamp) as 'Year of capture',count(*) as 'Total number of uploads' FROM kpi.Upload GROUP BY year(timestamp)",
+"SELECT year(timestamp) as 'Year',count(*) as 'Total number of uploads' FROM kpi.Upload GROUP BY year(timestamp)",
 "SELECT year(uploaded) AS 'Year', COUNT(DISTINCT(DATE(uploaded))) AS 'Number of camera days' FROM Photo GROUP BY year(uploaded)"
 ]
 
