@@ -2,12 +2,13 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="./css/mammal.css">
 		<title></title>
 		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 		
-			<script>
-			function datastring(object){
+		<script>
+		function datastring(object){
 			for (const x in object){
 				return x + ": " + object[x]
 			}
@@ -22,86 +23,84 @@
 			}
 			return 0;
 		}
-
-			
-			function graphdata(array,str){
-				let data = []
-				for (let item in array){
-					object = array[item];
-					data.push({x: new Date(object.Year,0), y:object[str]})
-				}
-
-				data.sort(compare)
-				console.log(data)
-				return(data)
+		
+		function graphdata(array,str){
+			let data = []
+			for (let item in array){
+				object = array[item];
+				data.push({x: new Date(object.Year,0), y:object[str]})
 			}
+			data.sort(compare)
+			console.log(data)
+			return(data)
+		}
 
-			const xhttp = new XMLHttpRequest();
-			xhttp.onload = function () {
-				data = JSON.parse(this.responseText);
-				console.log(data);
-				document.getElementById("is3").innerHTML = datastring(data[0][0]);
-				document.getElementById("is4").innerHTML = datastring(data[1][0]);
-				line1 = graphdata(data[2],'Total number of uploads');
-				line2 = graphdata(data[3],'Number of camera days');
-				var chart = new CanvasJS.Chart("chartContainer", {
-					animationEnabled: true,
-					theme: "light2",
-					axisX:{
-						crosshair: {
-							enabled: true,
-							snapToDataPoint: true
-						}
-					},
-					axisY: {
-						title: "Number of Camera-days",
-						includeZero: true,
-						crosshair: {
-							enabled: true
-						}
-					},
-					toolTip:{
-						shared:true
-					},  
-					legend:{
-						cursor:"pointer",
-						itemclick: toogleDataSeries
-					},
-					data: [{
-						type: "line",
-						showInLegend: true,
-						name: "Total number of uploads",
-						markerType: "square",
-						xValueFormatString: "YYYY",
-						color: "#F08080",
-						dataPoints: line1
-					},
-					{
-						type: "line",
-						showInLegend: true,
-						name: "Number of camera days",
-						lineDashType: "dash",
-						xValueFormatString: "YYYY",
-						dataPoints: line2
-					}]
-				});
-				chart.render();
-				
-				function toogleDataSeries(e){
-					if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-						e.dataSeries.visible = false;
-					} else{
-						e.dataSeries.visible = true;
+		const xhttp = new XMLHttpRequest();
+		xhttp.onload = function () {
+			data = JSON.parse(this.responseText);
+			console.log(data);
+			document.getElementById("is3").innerHTML = datastring(data[0][0]);
+			document.getElementById("is4").innerHTML = datastring(data[1][0]);
+			line1 = graphdata(data[2],'Total number of uploads');
+			line2 = graphdata(data[3],'Number of camera days');
+			var chart = new CanvasJS.Chart("chartContainer", {
+				animationEnabled: true,
+				theme: "light2",
+				axisX:{
+					crosshair: {
+						enabled: true,
+						snapToDataPoint: true
 					}
-					chart.render();
-				}			
-			}
+				},
+				axisY: {
+					title: "Number of Camera-days",
+					includeZero: true,
+					crosshair: {
+						enabled: true
+					}
+				},
+				toolTip:{
+					shared:true
+				},  
+				legend:{
+					cursor:"pointer",
+					itemclick: toogleDataSeries
+				},
+				data: [{
+					type: "line",
+					showInLegend: true,
+					name: "Total number of uploads",
+					markerType: "square",
+					xValueFormatString: "YYYY",
+					color: "#F08080",
+					dataPoints: line1
+				},
+				{
+					type: "line",
+					showInLegend: true,
+					name: "Number of camera days",
+					lineDashType: "dash",
+					xValueFormatString: "YYYY",
+					dataPoints: line2
+				}]
+			});
+			chart.render();
 			
-			xhttp.open("GET", "imgseq");
-			xhttp.send();
-			</script>
-
+			function toogleDataSeries(e){
+				if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+					e.dataSeries.visible = false;
+				} else{
+					e.dataSeries.visible = true;
+				}
+				chart.render();
+			}			
+		}
+			
+		xhttp.open("GET", "imgseq");
+		xhttp.send();
+		</script>
 	</head>
+	
 	<body class="kuang">
 		<header>
 			<nav class="kuang1">
@@ -128,17 +127,21 @@
 				</ul>
 			</nav>
 			<div class="da">
-				<div class="is1" id="is1">
-					<div class="is3" id="is3"></div>
-					<div class="is4" id="is4"></div>
-				</div>
-				<div class="is2" id="is2">
-					<!-- two line chart -->
-					<div id="chartContainer" style="height: 370px; width: 100%;"></div>
-				</div>
+				<div class="row">
+					<div class="is1" id="is1">
+						<div class="is3" id="is3"></div>
+						<div class="is4" id="is4"></div>
+					</div>
+					<div class="is2" id="is2">
+						<!-- two line chart -->
+						<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+					</div>
+				  </div>
 			</div>
 			
 		</header>
 		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>		
 	</body>
 </html>

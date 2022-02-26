@@ -40,7 +40,7 @@ body{
 	color: #00AF68;
 	}
 .kuang2{
-	margin-top: 4.5%;
+	margin-top: 6%;
 	margin-left: 14%;
 	margin-right: 15%;
 	background-color: #E2F5F2;
@@ -75,7 +75,7 @@ body{
 	width: 28%;
 	text-align: center;
 	padding: 7rem 0.3125rem;
-	font-size: 0.9375rem;
+	font-size: 1.5rem;
 	margin-left: 4%;
 	float: left;
 }
@@ -84,7 +84,7 @@ body{
 	width: 28%;
 	text-align: center;
 	padding: 7rem 0.3125rem;
-	font-size: 0.9375rem;
+	font-size: 1.5rem;
 	margin-left: 4%;
 	float: left;
 }
@@ -93,7 +93,7 @@ body{
 	width: 28%;
 	text-align: center;
 	padding: 7rem 0.3125rem;
-	font-size: 0.9375rem;
+	font-size: 1.5rem;
 	float: right;
 	margin-left: 4%;
 }
@@ -102,7 +102,7 @@ body{
 	width: 44%;
 	text-align: center;
 	padding: 12rem 0.3125rem;
-	font-size: 0.9375rem;
+	font-size: 1.5rem;
 	float: left;
 	margin-left: 4%;
 	margin-top: 3%;
@@ -111,9 +111,6 @@ body{
 .ds5{
 	background-color: white;
 	width: 44%;
-	text-align: center;
-	/* padding: 12rem 0.3125rem; */
-	font-size: 0.9375rem;
 	float: right;
 	margin-left: 4%;
 	margin-top: 3%;
@@ -122,20 +119,22 @@ body{
 .is1{
 	background-color: white;
 	width: 35%;
-	text-align: center;
-	padding: 20rem;
-	font-size: 0.9375rem;
+	text-align:center;
+	font-size: 2rem;
 	margin-left: 10%;
 	float: left;
 }
 .is2{
 	background-color: white;
 	width: 35%;
-	text-align: center;
-	padding: 20rem;
-	font-size: 0.9375rem;
-	margin-right: 10%;
+	margin-left: 10%;
 	float: right;
+}
+.is3{
+	margin-top: 12%;
+}
+.is4{
+	margin-top: 12%;
 }
 .c1{
 	background-color: white;
