@@ -138,6 +138,40 @@ body{
 }
 .c1{
 	background-color: white;
+	width: 28%;
+	text-align: center;
+	padding: 7rem 0.3125rem;
+	font-size: 1.5rem;
+	margin-left: 4%;
+	float: left;
+}
+.c2{
+	background-color: white;
+	width: 28%;
+	text-align: center;
+	padding: 7rem 0.3125rem;
+	font-size: 1.5rem;
+	margin-left: 4%;
+	float: left;
+}
+.c3{
+	background-color: white;
+	width: 28%;
+	text-align: center;
+	padding: 7rem 0.3125rem;
+	font-size: 1.5rem;
+	float: right;
+	margin-left: 4%;
+}
+.c4{
+	/* padding: 7rem 0.3125rem; */
+	margin-left: 3.5%;
+	margin-right: 3.5%;
+	margin-top: 3%;
+	margin-bottom: 3%;
+}
+.dc1{
+	background-color: white;
 	width: 35%;
 	text-align: center;
 	padding: 10rem;
@@ -145,7 +179,7 @@ body{
 	margin-left: 10%;
 	float: left;
 }
-.c2{
+.dc2{
 	background-color: white;
 	width: 35%;
 	text-align: center;
@@ -154,7 +188,7 @@ body{
 	margin-right: 10%;
 	float: right;
 }
-.c3{
+.dc3{
 	background-color: white;
 	width: 80%;
 	text-align: center;

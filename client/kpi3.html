@@ -5,9 +5,7 @@
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="./css/mammal.css">
 		<title></title>
-
 		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
 		<script>
 		function datastring(object){
 			for (const x in object){
@@ -38,13 +36,12 @@
 		}
 
 		const xhttp = new XMLHttpRequest();
-
 		xhttp.onload = function() {
 		data = JSON.parse(this.responseText);
 					console.log(data);
-					document.getElementById("ds1").innerHTML = datastring(data[0][0]);
-					document.getElementById("ds2").innerHTML = datastring(data[1][0]);
-					document.getElementById("ds3").innerHTML = datastring(data[2][0]);
+					document.getElementById("c1").innerHTML = datastring(data[0][0]);
+					document.getElementById("c2").innerHTML = datastring(data[1][0]);
+					document.getElementById("c3").innerHTML = datastring(data[2][0]);
 					line1 = graphdata(data[3],'Number of classification events');
 					var chart = new CanvasJS.Chart("chartContainer", {
 					animationEnabled: true,
@@ -91,18 +88,18 @@
 				</ul>
 			</nav>
 			<div class="da">
-				<div class="ds1" id="ds1">data1</div>
-				<div class="ds2" id="ds2">data2</div>
-				<div class="ds3" id="ds3">data3</div>
-				<div class="ds4">
+				<div class="row">
+					<div class="c1" id="c1">data1</div>
+					<div class="c2" id="c2">data2</div>
+					<div class="c3" id="c3">data3</div>
+				  </div>
+				<div class="c4" id="c4">
 					<!-- line chart -->
 					<div id="chartContainer" style="height: 300px; width: 100%;"></div>
 					<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 					</div>
 				</div>
-				<div class="ds5">data5</div>
-			</div>
-			
+			</div>			
 		</header>
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
