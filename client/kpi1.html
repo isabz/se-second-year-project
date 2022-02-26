@@ -2,10 +2,10 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<link rel="stylesheet" href="./css/mammal.css">
 		<title></title>
-    	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-		
+	 	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="./css/mammal.css">
 		<!-- grab data and prepare charts -->
 		<script>
 			function datastring(object){
@@ -92,9 +92,6 @@
 			xhttp.send();
 
 		</script>
-		 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		        crossorigin="anonymous"></script>
 	</head>
 	<body id="main" class="kuang">
 		<header>
@@ -144,19 +141,23 @@
 				</ul>
 			</nav>
 			<div class="da">
-				<div class="ds1" id="ds1">data1</div>
-				<div class="ds2" id="ds2">data2</div>
-				<div class="ds3" id="ds3">data3</div>
-				<div class="ds4" id="ds4"></div>
-				<div class="ds5" id="ds5">
-					<!-- line chart -->
-					<div id="chartContainer" style="width: 100%;"></div>
+				<div class="row align-items-center">
+					<div class="ds1" id="ds1"></div>
+					<div class="ds2" id="ds2"></div>
+					<div class="ds3" id="ds3"></div>
 				</div>
+				<div class="row">
+					<div class="ds4" id="ds4">.col-6</div>
+					<div class="ds5" id="ds5">
+						<!-- line chart -->
+						<div id="chartContainer" style="width: 100%;"></div>
+				  </div>
 			</div>
 			
 		</header>
 		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
 	</body>
 </html>
 
