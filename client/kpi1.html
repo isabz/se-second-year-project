@@ -6,24 +6,10 @@
 	 	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="./css/mammal.css">
+
+		<script src="script.js"></script> 
 		<!-- grab data and prepare charts -->
 		<script>
-			function datastring(object){
-				for (const x in object){
-					return x + ": " + object[x]
-				}
-			}
-			
-			function graphdata(array,str){
-				let data = []
-				for (let item in array){
-					object = array[item];
-					data.push({x: new Date(object.Year,0), y:object[str]})
-				}
-				console.log(data)
-				return(data)
-			}
-
 			const xhttp = new XMLHttpRequest();
 
 			xhttp.onload = function() {
@@ -92,6 +78,9 @@
 			xhttp.send();
 
 		</script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		        crossorigin="anonymous"></script>
 	</head>
 	<body id="main" class="kuang">
 		<header>
