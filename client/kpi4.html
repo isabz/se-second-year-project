@@ -19,7 +19,7 @@
 			xhttp.onload = function() {
 				data = JSON.parse(this.responseText);
 				console.log(data);
-				document.getElementById("c1").innerHTML = datastring(data[0][0]);
+				document.getElementById("dc1").innerHTML = datastring(data[0][0]);
 			}
 
 			xhttp.open("GET", "ukdata");
