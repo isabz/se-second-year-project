@@ -105,7 +105,7 @@ classpromises = [
 qpromises = ["SELECT COUNT(*) AS 'Number of 10k cells for which we have some records' FROM (SELECT COUNT(*) FROM Site GROUP BY grid_ref) AS grids;"
 ]
 
-//KPIs:
+//KPIs: 
 
 //KPIs:
 
