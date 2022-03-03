@@ -75,7 +75,7 @@
 
 	</head>
 	
-	<body class="kuang">
+	<body id="main" class="kuang">
 		<header>
 			<nav class="kuang1">
 				<ul>
@@ -90,30 +90,33 @@
 					<li class="li1"><a href="http://127.0.0.1:8848/kpi1.html">KPIS</a></li>
 				</ul>				
 			</nav>
-			<nav class="kuang2">
-				<ul>
-					<li><a href="http://127.0.0.1:8848/kpi1.html">Citizen Scientists</a></li>
-					<li><a href="http://127.0.0.1:8848/kpi2.html">Image Sequences</a></li>
-					<li><a href="http://127.0.0.1:8848/kpi3.html">Classification</a></li>
-					<li><a href="http://127.0.0.1:8848/kpi4.html">Data Coverage</a></li>
-					<li><a href="http://127.0.0.1:8848/kpi5.html">Impact</a></li>
-					<li><a href="http://127.0.0.1:8848/kpi6.html">Funding</a></li>
-				</ul>
-			</nav>
-			<div class="da">
-				<div class="row">
-					<div class="is1" id="is1">
-						<div class="is3" id="is3"></div>
-						<div class="is4" id="is4"></div>
-					</div>
-					<div class="is2" id="is2">
-						<!-- two line chart -->
-						<div id="chartContainer" style="height: 370px; width: 100%;"></div>
-					</div>
-				  </div>
-			</div>
-			
 		</header>
+		<div class="container">
+			<div class="row">
+				<nav class="kuang2">
+					<ul>
+						<li><a href="http://127.0.0.1:8848/kpi1.html">Citizen Scientists</a></li>
+						<li><a href="http://127.0.0.1:8848/kpi2.html">Image Sequences</a></li>
+						<li><a href="http://127.0.0.1:8848/kpi3.html">Classification</a></li>
+						<li><a href="http://127.0.0.1:8848/kpi4.html">Data Coverage</a></li>
+						<li><a href="http://127.0.0.1:8848/kpi5.html">Impact</a></li>
+						<li><a href="http://127.0.0.1:8848/kpi6.html">Funding</a></li>
+					</ul>
+				</nav>
+			</div>
+			<div class="row">
+				<div class="col" id="is1">
+					<div class="p-6 my-6 border bg-light fs-4">
+						<div class="pb-4" id="is3"></div>
+						<div id="is4"></div>
+					</div>
+				</div>
+				<div class="col p-5 mt-3" id="is2">
+					<!-- two line chart -->
+					<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+				</div>
+			</div>
+		</div>
 		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>		
