@@ -70,26 +70,6 @@ body{
 	width: 100%;
 	display: inline-block;
 }
-.is1{
-	background-color: white;
-	width: 35%;
-	text-align:center;
-	font-size: 2rem;
-	margin-left: 10%;
-	float: left;
-}
-.is2{
-	background-color: white;
-	width: 35%;
-	margin-left: 10%;
-	float: right;
-}
-.is3{
-	margin-top: 12%;
-}
-.is4{
-	margin-top: 12%;
-}
 .c1{
 	background-color: white;
 	width: 28%;

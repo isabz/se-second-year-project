@@ -35,7 +35,7 @@
 		xhttp.send();
 		</script>
 	</head>
-	<body class="kuang">
+	<body id="main" class="kuang">
 		<header>
 			<nav class="kuang1">
 				<ul>
@@ -50,6 +50,8 @@
 					<li class="li1"><a href="http://127.0.0.1:8848/kpi1.html">KPIS</a></li>
 				</ul>				
 			</nav>
+		</header>
+		<div class="container">
 			<div class="row">
 				<nav class="kuang2">
 					<ul>
@@ -62,20 +64,25 @@
 					</ul>
 				</nav>
 			</div>
-			<div class="da">
-				<div class="row">
-					<div class="c1" id="c1">data1</div>
-					<div class="c2" id="c2">data2</div>
-					<div class="c3" id="c3">data3</div>
-				  </div>
-				<div class="c4" id="c4">
+			<div class="row">
+					<div class="col">
+						<div class="p-6 my-6 border bg-light fs-4" id="c1">data1</div>
+					</div>
+					<div class="col">					
+						<div class="p-6 my-6 border bg-light fs-4" id="c2">data2</div>
+					</div>
+					<div class="col">					
+						<div class="p-6 my-6 border bg-light fs-4" id="c3">data3</div>
+					</div>
+				</div>
+				<div class="col" id="c4">
 					<!-- line chart -->
 					<div id="chartContainer" style="height: 300px; width: 100%;"></div>
 					<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 					</div>
 				</div>
-			</div>			
-		</header>
+			</div>
+		</div>			
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 	</body>
