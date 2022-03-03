@@ -96,9 +96,12 @@ classpromises = [
 qpromises = ["SELECT COUNT(*) AS 'Number of 10k cells for which we have some records' FROM (SELECT COUNT(*) FROM Site GROUP BY grid_ref) AS grids;"
 ]
 
-//KPIs:
+//KPIs: Impact
+impactpromises = ["SELECT COUNT(*) AS 'Number of peer reviewed papers' FROM Papers;"]
 
-//KPIs:
+//KPIs: Funding
+fundpromises = ["SELECT SUM(amount) AS 'Sum' FROM Funding;",
+"SELECT type, SUM(amount) as 'Sum' FROM kpi.Funding GROUP BY type;"]
 
 //#############################################
 
@@ -106,3 +109,5 @@ getData(citscipromises,"citsci.json");
 getData(imgseqpromises,"imgseq.json");
 getData(classpromises,"class.json");
 getData(qpromises,"datacoverage.json");
+getData(impactpromises,"impact.json");
+getData(fundpromises,"funds.json");
