@@ -8,32 +8,48 @@
 		<title></title>
 
 		<script>
-		window.onload = function () {
+			function datastring(object){
+				for (const x in object){
+					return x + ": £" + object[x]
+				}
+			}
+	
+			function graphdata(array,str){
+				let data = []
+				for (let item in array){
+					object = array[item];
+					data.push({y: object["Sum"], name: object["type"]})
+				}
+				console.log(data)
+				return(data)
+			}
+			const xhttp = new XMLHttpRequest();
 		
-		var chart = new CanvasJS.Chart("chartContainer", {
-			exportEnabled: true,
-			animationEnabled: true,
-			title:{
-				text: "Other income"
-			},
-			legend:{
-				cursor: "pointer",
-				itemclick: explodePie
-			},
-			data: [{
-				type: "pie",
-				showInLegend: true,
-				toolTipContent: "{name}: <strong>{y}%</strong>",
-				indexLabel: "{name} - {y}%",
-				dataPoints: [
-					{ y: 26, name: "advertising", exploded: true },
-					{ y: 20, name: "sponsorship" },
-					{ y: 5, name: "donations" },
-					{ y: 22, name: "subscriptions"}
-				]
-			}]
-		});
-		chart.render();
+			xhttp.onload = function() {
+				data = JSON.parse(this.responseText);
+				console.log(data);
+				document.getElementById("f1").innerHTML = datastring(data[0][0]);
+				piedata = graphdata(data[1])
+		
+			var chart = new CanvasJS.Chart("chartContainer", {
+				exportEnabled: true,
+				animationEnabled: true,
+				title:{
+					text: "Funding"
+				},
+				legend:{
+					cursor: "pointer",
+					itemclick: explodePie
+				},
+				data: [{
+					type: "pie",
+					showInLegend: true,
+					toolTipContent: "{name}: £{y}",
+					indexLabel: "{name} - {y}%",
+					dataPoints: piedata
+				}]
+			});
+			chart.render();
 		}
 		
 		function explodePie (e) {
@@ -45,6 +61,10 @@
 			e.chart.render();
 		
 		}
+
+		xhttp.open("GET", "fund");
+		xhttp.send();
+
 		</script>
 	</head>
 	<body class="kuang">
@@ -73,7 +93,7 @@
 				</ul>
 			</nav>
 			<div class="da">
-				<div class="f1">data1</div>
+				<div class="f1" id="f1">data1</div>
 				<div class="f2">data2</div>
 				<div class="f3">
 					<!-- pie chart -->

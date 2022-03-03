@@ -5,6 +5,22 @@
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="./css/mammal.css">
 		<title></title>
+
+		<script src="script.js"></script> 
+		<!-- grab data and prepare charts -->
+		<script>
+			const xhttp = new XMLHttpRequest();
+
+			xhttp.onload = function() {
+				data = JSON.parse(this.responseText);
+				console.log(data);
+				document.getElementById("i1").innerHTML = datastring(data[0][0]);
+			}
+
+			xhttp.open("GET", "impact");
+			xhttp.send();
+
+		</script>
 		
 	</head>
 	<body class="kuang">
@@ -33,7 +49,7 @@
 				</ul>
 			</nav>
 			<div class="da">
-				<div class="i1">data1</div>
+				<div class="i1" id="i1">data1</div>
 				<div class="i2">data2</div>
 				<div class="i3">data3</div>
 			</div>
