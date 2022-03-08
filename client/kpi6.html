@@ -30,21 +30,6 @@
 				data = JSON.parse(this.responseText);
 				console.log(data);
 				document.getElementById("f1").innerHTML = datastring(data[0][0]);
-				// line1 = graphdata(data[1],'Sum');
-				// 	var chart = new CanvasJS.Chart("chartContainer", {
-				// 	animationEnabled: true,
-				// 	theme: "light2",
-				// 	title:{
-				// 		text: "Number of peer reviewed papers"
-				// 	},
-				// 	data: [{        
-				// 		type: "line",
-				// 		indexLabelFontSize: 16,
-				// 		xValueFormatString: "YYYY",
-				// 		dataPoints:line1
-				// 	}]
-				// });
-				// chart.render();
 				piedata = graphdata(data[1])
 
 				var chart = new CanvasJS.Chart("chartContainer", {
@@ -139,13 +124,11 @@
 					<div class="col">
 						<div class="p-6 my-6 border bg-light fs-4" id="f1"></div>
 					</div>
-				</div>
-				<div class="row">
 					<div class="col" id="f2">
 						<div id="chartContainer" style="height: 300px; width: 100%;" ></div>
 						<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-					</div>
-				</div>				
+					</div>		
+				</div>
 			</div>
 
 		<script src="js/jquery.min.js"></script>
