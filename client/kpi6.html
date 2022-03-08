@@ -30,21 +30,51 @@
 				data = JSON.parse(this.responseText);
 				console.log(data);
 				document.getElementById("f1").innerHTML = datastring(data[0][0]);
-				line1 = graphdata(data[1],'Sum');
-					var chart = new CanvasJS.Chart("chartContainer", {
+				// line1 = graphdata(data[1],'Sum');
+				// 	var chart = new CanvasJS.Chart("chartContainer", {
+				// 	animationEnabled: true,
+				// 	theme: "light2",
+				// 	title:{
+				// 		text: "Number of peer reviewed papers"
+				// 	},
+				// 	data: [{        
+				// 		type: "line",
+				// 		indexLabelFontSize: 16,
+				// 		xValueFormatString: "YYYY",
+				// 		dataPoints:line1
+				// 	}]
+				// });
+				// chart.render();
+				piedata = graphdata(data[1])
+
+				var chart = new CanvasJS.Chart("chartContainer", {
+					exportEnabled: true,
 					animationEnabled: true,
-					theme: "light2",
 					title:{
-						text: "Number of peer reviewed papers"
+						text: "Funding"
 					},
-					data: [{        
-						type: "line",
-						indexLabelFontSize: 16,
-						xValueFormatString: "YYYY",
-						dataPoints:line1
+					legend:{
+						cursor: "pointer",
+						itemclick: explodePie
+					},
+					data: [{
+						type: "pie",
+						showInLegend: true,
+						toolTipContent: "{name}: £{y}",
+						indexLabel: "{name} - {y}%",
+						dataPoints: piedata
 					}]
 				});
 				chart.render();
+			}
+
+			function explodePie (e) {
+				if(typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+					e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+				} else {
+					e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+				}
+				e.chart.render();
 		}
 
 		xhttp.open("GET", "fund");
